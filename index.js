@@ -20,8 +20,8 @@ const userSchema = new Schema({
 });
 const exerciseSchema = new Schema({
   username: String,
-  description: String,
-  duration: Number,
+  description: { type: String, required: true },
+  duration: { type: Number, required: true },
   date: Date,
 });
 
@@ -50,7 +50,10 @@ function convertirFecha(fechaISO) {
   const dia = date.getUTCDate();
   const anio = date.getUTCFullYear();
 
-  return `${diaSemana} ${mes} ${dia} ${anio}`;
+  // Agregar un "0" adelante del día si es menor a 10
+  const diaFormateado = dia < 10 ? `0${dia}` : dia;
+
+  return `${diaSemana} ${mes} ${diaFormateado} ${anio}`;
 }
 
 const users = [];
